@@ -1,5 +1,5 @@
 external-secrets:
-  priorityClassName: tier-0
+  priorityClassName: ""
   replicaCount: 2
   concurrent: 8
   extraArgs:
