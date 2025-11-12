@@ -28,61 +28,19 @@ external-secrets:
   revisionHistoryLimit: 2
   podLabels:
     goharbor.io/harbor-container-webhook-disable: "true"
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  nodeSelector:
-    role.node.kubernetes.io/critical-addon: "true"
-  topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: "topology.kubernetes.io/zone"
-      whenUnsatisfiable: DoNotSchedule
-      matchLabelKeys:
-        - pod-template-hash
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/name: external-secrets
-    - maxSkew: 1
-      topologyKey: "kubernetes.io/hostname"
-      whenUnsatisfiable: ScheduleAnyway
-      matchLabelKeys:
-        - pod-template-hash
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/name: external-secrets
+  tolerations: []
+  nodeSelector: {}
+  topologySpreadConstraints: []
   webhook:
     replicaCount: 2
     podAnnotations:
       ad.datadoghq.com/webhook.logs: '[{"service":"external-secrets","source":"go"}]'
     revisionHistoryLimit: 2
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Exists
-    nodeSelector:
-      role.node.kubernetes.io/critical-addon: "true"
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: "topology.kubernetes.io/zone"
-        whenUnsatisfiable: DoNotSchedule
-        matchLabelKeys:
-          - pod-template-hash
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: external-secrets-webhook
-      - maxSkew: 1
-        topologyKey: "kubernetes.io/hostname"
-        whenUnsatisfiable: ScheduleAnyway
-        matchLabelKeys:
-          - pod-template-hash
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: external-secrets-webhook
+    tolerations: []
+    nodeSelector: {}
+    topologySpreadConstraints: []
   certController:
-    podAnnotations:
-      ad.datadoghq.com/cert-controller.logs: '[{"service":"external-secrets","source":"go"}]'
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Exists
-    nodeSelector:
-      role.node.kubernetes.io/critical-addon: "true"
+    podAnnotations: {}
+    tolerations: []
+    nodeSelector: {}
     revisionHistoryLimit: 2
