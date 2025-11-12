@@ -6,14 +6,13 @@ external-secrets:
     client-qps: 50
     client-burst: 100
 #    log.level: debug
-  installCRDs: true
+  installCRDs: false
   leaderElect: true
   rbac:
     create: true
   serviceAccount:
     name: "external-secrets"
-  prometheus:
-    enabled: true
+  
   podDisruptionBudget:
     enabled: true
     maxUnavailable: 25%
@@ -31,6 +30,11 @@ external-secrets:
   tolerations: []
   nodeSelector: {}
   topologySpreadConstraints: []
+  serviceMonitor:
+    enabled: true
+  metrics:
+    service:
+      enabled: true
   webhook:
     replicaCount: 2
     podAnnotations:
@@ -39,8 +43,18 @@ external-secrets:
     tolerations: []
     nodeSelector: {}
     topologySpreadConstraints: []
+    serviceMonitor:
+      enabled: true
+    metrics:
+      service:
+        enabled: true
   certController:
     podAnnotations: {}
     tolerations: []
     nodeSelector: {}
     revisionHistoryLimit: 2
+    metrics:
+      service:
+        enabled: true
+    serviceMonitor:
+      enabled: true
