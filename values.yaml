@@ -7,13 +7,17 @@ external-secrets:
     client-burst: 100
 #    log.level: debug
   installCRDs: true
+  crds:
+    annotations:
+      argocd.argoproj.io/sync-options: ServerSideApply=true
+      argocd.argoproj.io/sync-wave: "-10"
   leaderElect: true
   rbac:
     create: true
   serviceAccount:
     name: "external-secrets"
-  prometheus:
-    enabled: true
+  # prometheus:
+  #   enabled: true
   podDisruptionBudget:
     enabled: true
     maxUnavailable: 25%
