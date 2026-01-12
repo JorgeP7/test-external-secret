@@ -6,13 +6,14 @@ external-secrets:
     client-qps: 50
     client-burst: 100
 #    log.level: debug
-  installCRDs: false
+  installCRDs: true
   leaderElect: true
   rbac:
     create: true
   serviceAccount:
     name: "external-secrets"
-  
+  prometheus:
+    enabled: true
   podDisruptionBudget:
     enabled: true
     maxUnavailable: 25%
