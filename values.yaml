@@ -16,8 +16,6 @@ external-secrets:
     create: true
   serviceAccount:
     name: "external-secrets"
-  prometheus:
-    enabled: true
   podDisruptionBudget:
     enabled: true
     maxUnavailable: 25%
@@ -37,6 +35,9 @@ external-secrets:
   topologySpreadConstraints: []
   serviceMonitor:
     enabled: true
+    renderMode: skipIfMissing
+    interval: 30s
+    scrapeTimeout: 25s
   metrics:
     service:
       enabled: true
