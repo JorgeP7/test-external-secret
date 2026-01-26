@@ -1,0 +1,31 @@
+# values-local.yaml
+image:
+  repository: registry.k8s.io/external-dns/external-dns  # Usa la oficial (sin fork por ahora)
+  tag: v0.18.0   # o v0.18.0 para comparar
+
+provider: fake   # ← ¡Clave! Cambia a fake para testing local
+
+extraArgs:
+  annotation-filter: 'ingress.indeed.com/external-dns notin (false),nginx.ingress.kubernetes.io/canary notin (true)'
+  # Quita args AWS-specific (no los necesita fake)
+  # aws-api-retries, aws-batch-change-size, aws-zone-type, aws-zones-cache-duration → elimínalos o ignóralos
+
+domainFilters:
+  - example.local     # Usa un dominio fake que no exista en la realidad
+
+txtOwnerId: local-test-cluster   # Cambia a algo local
+txtPrefix: 'owner-%{record_type}.'
+
+sources:
+  - service
+  - ingress
+  - crd   # Si usas CRDs de external-dns, créalas después
+
+policy: sync
+interval: 30s          # Más rápido para testing local
+triggerLoopOnEvent: true
+logLevel: debug        # Para ver todo lo que hace
+dryRun: false          # Puedes poner true primero para ver sin "aplicar"
+
+metrics:
+  enabled: true
