@@ -1,27 +1,36 @@
-# values-local.yaml
-image:
-  repository: registry.k8s.io/external-dns/external-dns  # Usa la oficial (sin fork por ahora)
-  tag: v0.18.0   # o v0.18.0 para comparar
+# values.yaml (para testing local con provider fake)
 
-provider: fake   # ← ¡Clave! Cambia a fake para testing local
+image:
+  repository: registry.k8s.io/external-dns/external-dns
+  tag: v0.18.0   # Mantén v0.18.0 por ahora; cambia a v0.19.0 después
+
+provider:
+  name: fake     # ← Esto es clave y obligatorio en chart >=1.14/1.18
 
 extraArgs:
   annotation-filter: 'ingress.indeed.com/external-dns notin (false),nginx.ingress.kubernetes.io/canary notin (true)'
-  log-level: debug   # Para ver más detalles
-  dry-run: ""        # Opcional: pon true primero para solo ver "would create/delete", sin "apply"
+  log-level: debug
+  dry-run: ""          # Deja vacío para false; o pon "true" para modo simulación
   txt-owner-id: local-test-cluster
   txt-prefix: 'owner-%{record_type}.'
-  domain-filter: 0
+  domain-filter: example.local   # ← Corrige esto (string o lista)
+  # O usa domainFilters si el chart lo soporta como top-level (mejor):
+  # domainFilters:
+  #   - example.local
 
 sources:
   - service
   - ingress
 
 policy: sync
-interval: 30s          # Más rápido para testing local
+interval: 30s
 triggerLoopOnEvent: true
-logLevel: debug        # Para ver todo lo que hace
-dryRun: false          # Puedes poner true primero para ver sin "aplicar"
+
+logLevel: debug      # Top-level para el chart (opcional si usas extraArgs)
+dryRun: false
 
 metrics:
   enabled: true
+
+# Asegúrate de NO tener nada de AWS aquí (quita si existe):
+# aws: {}
