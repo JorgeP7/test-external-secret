@@ -7,19 +7,15 @@ provider: fake   # ← ¡Clave! Cambia a fake para testing local
 
 extraArgs:
   annotation-filter: 'ingress.indeed.com/external-dns notin (false),nginx.ingress.kubernetes.io/canary notin (true)'
-  # Quita args AWS-specific (no los necesita fake)
-  # aws-api-retries, aws-batch-change-size, aws-zone-type, aws-zones-cache-duration → elimínalos o ignóralos
-
-domainFilters:
-  - example.local     # Usa un dominio fake que no exista en la realidad
-
-txtOwnerId: local-test-cluster   # Cambia a algo local
-txtPrefix: 'owner-%{record_type}.'
+  log-level: debug   # Para ver más detalles
+  dry-run: ""        # Opcional: pon true primero para solo ver "would create/delete", sin "apply"
+  txt-owner-id: local-test-cluster
+  txt-prefix: 'owner-%{record_type}.'
+  domain-filter: 0
 
 sources:
   - service
   - ingress
-  - crd   # Si usas CRDs de external-dns, créalas después
 
 policy: sync
 interval: 30s          # Más rápido para testing local
