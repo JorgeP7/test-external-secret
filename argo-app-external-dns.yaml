@@ -10,9 +10,8 @@ spec:
     targetRevision: master
     path: charts/external-dns
     helm:
-      releaseName: external-dns
-      values:
-        targetRevision: master
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: external-dns
