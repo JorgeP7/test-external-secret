@@ -8,6 +8,7 @@ provider:
   name: fake     # ← Esto es clave y obligatorio en chart >=1.14/1.18
 
 extraArgs:
+  provider: fake
   annotation-filter: 'ingress.indeed.com/external-dns notin (false),nginx.ingress.kubernetes.io/canary notin (true)'
   log-level: debug
   dry-run: ""          # Deja vacío para false; o pon "true" para modo simulación
