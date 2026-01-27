@@ -17,6 +17,14 @@ extraArgs:
   # O usa domainFilters si el chart lo soporta como top-level (mejor):
   # domainFilters:
   #   - example.local
+  aws-api-retries: '3'
+  aws-batch-change-size: '100'
+  aws-zone-type: ''
+  aws-zones-cache-duration: '24h'
+  metrics-address: ':7979'
+  managed-record-types:
+    - A
+    - CNAME
 
 sources:
   - service
