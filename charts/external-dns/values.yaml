@@ -2,7 +2,7 @@
 
 image:
   repository: registry.k8s.io/external-dns/external-dns
-  tag: v0.19.0   # Mantén v0.18.0 por ahora; cambia a v0.19.0 después
+  tag: v0.20.0   # Mantén v0.18.0 por ahora; cambia a v0.19.0 después
 
 provider:
   name: fake     # ← Esto es clave y obligatorio en chart >=1.14/1.18
