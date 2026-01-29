@@ -1,14 +1,20 @@
 # values.yaml (para testing local con provider fake)
 
 image:
-  repository: registry.k8s.io/external-dns/external-dns
-  tag: v0.20.0   # Mantén v0.18.0 por ahora; cambia a v0.19.0 después
+  repository: harbor.indeed.tech/pure/external-dns
+  tag: v0.18.0-indeed-0
 
-provider:
-  name: fake     # ← Esto es clave y obligatorio en chart >=1.14/1.18
+interval: 1h
+triggerLoopOnEvent: true
+crd:
+  create: true
+sources:
+  - crd
+  - service
+  - ingress
+provider: fake   # ← Esto es clave y obligatorio en chart >=1.14/1.18
 
 extraArgs:
-  provider: fake
   annotation-filter: 'ingress.indeed.com/external-dns notin (false),nginx.ingress.kubernetes.io/canary notin (true)'
   log-level: debug
   dry-run: ""          # Deja vacío para false; o pon "true" para modo simulación
@@ -26,15 +32,6 @@ extraArgs:
   managed-record-types:
     - A
     - CNAME
-
-sources:
-  - service
-  - ingress
-
-policy: sync
-interval: 30s
-triggerLoopOnEvent: true
-
 logLevel: debug      # Top-level para el chart (opcional si usas extraArgs)
 dryRun: false
 
